@@ -93,6 +93,15 @@ async function loadGeneration(gen) {
   statusEl.textContent = L("Laden...", "Loading...");
   grid.innerHTML = "";
   try {
+    if (gen === "all") {
+      const data = await getJSON(`${API}/pokemon-species?limit=2000`);
+      list = data.results
+        .map((s) => ({ name: s.name, id: Number(s.url.split("/").filter(Boolean).pop()), speciesUrl: s.url }))
+        .filter((pokemon) => pokemon.id > 0)
+        .sort((a, b) => a.id - b.id);
+      render();
+      return true;
+    }
     const data = await getJSON(`${API}/generation/${gen}`);
     list = data.pokemon_species
       .map((s) => ({ name: s.name, id: Number(s.url.split("/").filter(Boolean).pop()), speciesUrl: s.url }))

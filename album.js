@@ -3,7 +3,7 @@
   const $ = (id) => document.getElementById(id);
   const L = (nl, en) => I18N.L(nl, en);
   const KEY = "pokeAlbum";
-  const PKEY = "pokeAlbumPrices";
+  const PKEY = "pokeAlbumPrices-v3";
   const HKEY = "pokeAlbumHistory";
   const esc = PK.esc;
 

@@ -60,6 +60,19 @@
   const marketPriceValues = new Map();
   let priceRunId = 0;
 
+  // Verified corrections for TCGdex/Cardmarket records that are known to be mis-mapped.
+  const VERIFIED_CARDMARKET_PRICES = {
+    "me06-138": {
+      trend: 285.45,
+      avg: 301.58,
+      low: 195,
+      avg1: 255.84,
+      avg7: 277.94,
+      avg30: 301.58,
+      updated: "2026-11-17",
+    },
+  };
+
   const getJSON = async (path) => {
     const res = await fetch(API + path, { cache: path.startsWith("/cards/") ? "no-store" : "default" });
     if (!res.ok) throw new Error("HTTP " + res.status);
@@ -99,17 +112,28 @@
   function prices(card) {
     const cm = card.pricing?.cardmarket || null;
     const tp = card.pricing?.tcgplayer || null;
-    const pick = (k) => (cm ? (cm[k] || cm[k + "-holo"] || null) : null);
+    const corrected = VERIFIED_CARDMARKET_PRICES[card.id];
+    const pick = (k) => cm ? (cm[k] != null ? cm[k] : (cm[k + "-holo"] != null ? cm[k + "-holo"] : null)) : null;
+    const holoPick = (k) => cm?.[k + "-holo"] != null ? cm[k + "-holo"] : null;
     let tcg = null;
     if (tp) {
-      const key = Object.keys(tp).find((k) => tp[k] && typeof tp[k] === "object" && tp[k].marketPrice);
+      const key = ["reverse-holofoil", "holofoil", "normal"].find((name) =>
+        tp[name] && typeof tp[name] === "object" && tp[name].marketPrice != null
+      );
       if (key) tcg = tp[key].marketPrice;
     }
-    return {
+    const result = {
       trend: pick("trend"), avg: pick("avg"), low: pick("low"),
+      holoTrend: holoPick("trend"), holoAvg: holoPick("avg"), holoLow: holoPick("low"),
       avg1: pick("avg1"), avg7: pick("avg7"), avg30: pick("avg30"),
+      holoAvg1: holoPick("avg1"), holoAvg7: holoPick("avg7"), holoAvg30: holoPick("avg30"),
       tcg, updated: cm?.updated || tp?.updated || null,
     };
+    if (corrected) {
+      Object.assign(result, corrected);
+      result.corrected = true;
+    }
+    return result;
   }
 
   // ---------- Browse all cards + search ----------
@@ -314,15 +338,23 @@
 
   // ---------- Detail ----------
   function chart(p) {
-    const pts = [
-      [L("30 dagen", "30 days"), p.avg30],
-      [L("7 dagen", "7 days"), p.avg7],
-      [L("1 dag", "1 day"), p.avg1],
-    ].filter(([, v]) => v != null);
+    const hasHoloHistory = p.holoAvg30 != null || p.holoAvg7 != null || p.holoAvg1 != null;
+    const trend = hasHoloHistory ? p.holoTrend : p.trend;
+    const pts = (hasHoloHistory
+      ? [
+          [L("30 dagen", "30 days"), p.holoAvg30],
+          [L("7 dagen", "7 days"), p.holoAvg7],
+          [L("1 dag", "1 day"), p.holoAvg1],
+        ]
+      : [
+          [L("30 dagen", "30 days"), p.avg30],
+          [L("7 dagen", "7 days"), p.avg7],
+          [L("1 dag", "1 day"), p.avg1],
+        ]).filter(([, v]) => v != null);
     if (pts.length < 2) return `<p class='tcg-note'>${L("Niet genoeg prijsgegevens voor een grafiek.", "Not enough price data for a chart.")}</p>`;
 
     const W = 520, H = 220, padL = 55, padR = 55, padT = 30, padB = 40;
-    const vals = pts.map(([, v]) => v).concat(p.trend != null ? [p.trend] : []);
+    const vals = pts.map(([, v]) => v).concat(trend != null ? [trend] : []);
     const min = Math.min(...vals), max = Math.max(...vals);
     const span = max - min || 1;
     const x = (i) => padL + (i * (W - padL - padR)) / (pts.length - 1);
@@ -338,9 +370,9 @@
       )
       .join("");
     const trendLine =
-      p.trend != null
-        ? `<line x1="${padL}" x2="${W - padR}" y1="${y(p.trend)}" y2="${y(p.trend)}" class="trend"/>
-           <text x="${W - padR}" y="${y(p.trend) - 6}" text-anchor="end" class="lab">trend ${eur.format(p.trend)}</text>`
+      trend != null
+        ? `<line x1="${padL}" x2="${W - padR}" y1="${y(trend)}" y2="${y(trend)}" class="trend"/>
+           <text x="${W - padR}" y="${y(trend) - 6}" text-anchor="end" class="lab">trend ${eur.format(trend)}</text>`
         : "";
     return `
       <svg viewBox="0 0 ${W} ${H}" class="tcg-chart" role="img" aria-label="Prijsgrafiek">
@@ -379,11 +411,18 @@
                   ${box(L("Trendprijs", "Trend price"), p.trend != null ? eur.format(p.trend) : "–", "main " + dir)}
                   ${box(L("Gemiddeld", "Average"), p.avg != null ? eur.format(p.avg) : "–")}
                   ${box(L("Laagste", "Lowest"), p.low != null ? eur.format(p.low) : "–")}
+                  ${p.holoTrend != null || p.holoAvg != null || p.holoLow != null
+                    ? `${box(L("Holo trend", "Holo trend"), p.holoTrend != null ? eur.format(p.holoTrend) : "–")}
+                       ${box(L("Holo gemiddeld", "Holo average"), p.holoAvg != null ? eur.format(p.holoAvg) : "–")}
+                       ${box(L("Holo laagste", "Holo lowest"), p.holoLow != null ? eur.format(p.holoLow) : "–")}`
+                    : ""}
                   ${box("TCGplayer", p.tcg != null ? usd.format(p.tcg) : "–")}
                 </div>
                 <h4>${L("Prijsverloop (gemiddelde prijs)", "Price history (average price)")}</h4>
                 ${chart(p)}
-                <p class="tcg-note">${L("Bron: Cardmarket (EUR) en TCGplayer (USD), via TCGdex. Bron laatst bijgewerkt:", "Source: Cardmarket (EUR) and TCGplayer (USD), via TCGdex. Source last updated:")} ${esc(updated)}.</p>`
+                <p class="tcg-note">${p.corrected
+                  ? L("Gecorrigeerd op basis van de door jou aangeleverde Cardmarket-gegevens. Bron laatst bijgewerkt:", "Corrected using the Cardmarket data you provided. Source last updated:")
+                  : L("Bron: Cardmarket (EUR) en TCGplayer (USD), via TCGdex. Bron laatst bijgewerkt:", "Source: Cardmarket (EUR) and TCGplayer (USD), via TCGdex. Source last updated:")} ${esc(updated)}.</p>`
               : `<p class="tcg-note">${L("Voor deze kaart is geen prijs beschikbaar.", "No price available for this card.")}</p>`
           }
         </div>
