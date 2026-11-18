@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pikapedia – Pokémon, items, kaartwaarde en walkthroughs</title>
+  <meta name="description" content="Pikapedia is een Nederlandstalige Pokémon-fansite met een Pokédex, items, kaartwaarde, artikelen en walkthroughs voor alle Pokémon-games.">
+  <meta property="og:title" content="Pikapedia – Pokémon, items, kaartwaarde en walkthroughs">
+  <meta property="og:description" content="Pokédex, items, kaartwaarde, artikelen en walkthroughs voor alle Pokémon-games.">
+  <meta property="og:type" content="website">
+ 
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#ff3d6e">
+  <script>try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}</script>
+  <!-- GOOGLE ADSENSE: plak hier het volledige Google AdSense-script dat begint met
+       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-..."> -->
+  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="stylesheet" href="dark.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#main-content" data-en="Skip to main content">Ga naar de inhoud</a>
+  <aside class="sidebar">
+    <div class="brand"><a class="brand-link" href="index.html"><span class="ball"></span>    <div><b>Pikapedia</b><small data-en="Pokémon fan site">Pokémon-fansite</small></div></a></div>
+    <div class="lang-switch" role="group" aria-label="Taal / Language">
+      <button class="lang-btn" data-lang="nl" title="Nederlands">NL</button>
+      <button class="lang-btn" data-lang="en" title="English">EN</button>
+      <button id="theme-toggle" class="theme-btn" type="button">Donker</button>
+    </div>
+    <div class="gs">
+      <label class="gs-field" for="gs-q">
+        <svg class="gs-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+        <input id="gs-q" type="search" placeholder="Zoek Pokémon, items, routes..." data-en-placeholder="Search Pokémon, items, routes..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="gs-results" aria-expanded="false" aria-label="Zoeken op de hele site" data-en-aria-label="Search the whole site">
+        <kbd class="gs-shortcut" aria-hidden="true">/</kbd>
+      </label>
+      <div id="gs-results" class="gs-results" role="listbox" aria-label="Zoekresultaten" data-en-aria-label="Search results" hidden></div>
+    </div>
+    <nav class="side-menu">
+      <button class="tab active" data-view="home"><span data-en="Home">Home</span></button>
+      <button class="tab" data-view="dashboard"><span data-en="Trainer dashboard">Trainer-dashboard</span></button>
+      <button class="tab" data-view="emulator"><span data-en="GBA emulator">GBA-emulator</span></button>
+      <button class="tab" data-view="pokedex"><span data-en="Pokédex &amp; Items">Pokédex &amp; Items</span></button>
+      <button class="tab" data-view="regions"><span data-en="Regions &amp; routes">Regio's &amp; routes</span></button>
+      <div id="region-tree" class="region-tree" hidden></div>
+      <button class="tab" data-view="walkthrough"><span>Walkthrough</span></button>
+      <button class="tab" data-view="characters"><span data-en="Game characters">Personages</span></button>
+      <button class="tab" data-view="cards"><span data-en="Card values">Kaartwaarde</span></button>
+      <button class="tab" data-view="album"><span data-en="Card album">Kaartalbum</span></button>
+      <button class="tab" data-view="tcg"><span data-en="Pokémon TCG">Pokémon TCG</span></button>
+      <button class="tab" data-view="game"><span data-en="Who's that Pokémon?">Wie is deze Pokémon?</span></button>
+      <button class="tab" data-view="tools"><span data-en="Trainer tools">Trainer-tools</span></button>
+      <button class="tab" data-view="news"><span data-en="News &amp; agenda">Nieuws &amp; agenda</span></button>
+      <button class="tab" data-view="coloring"><span data-en="Gallery">Galerij</span></button>
+      <button class="tab" data-view="articles"><span data-en="Articles (Dutch)">Artikelen</span></button>
+    </nav>
+    <div class="side-foot">Gotta catch 'em all!</div>
+    <nav class="side-bottom">
+      <button class="tab" data-view="websites"><span>Websites</span></button>
+    </nav>
+  </aside>
+
+  <div id="main-content" class="content" tabindex="-1">
+  <section id="first-visit" class="first-visit" aria-labelledby="first-visit-title" hidden>
+    <div><h2 id="first-visit-title" data-en="Welcome to Pikapedia!">Welkom op Pikapedia!</h2>
+      <p data-en="Start with the Pokédex, explore a region, or open the trainer tools. Your language, theme, and selected filters are remembered on this device.">Begin bij de Pokédex, ontdek een regio of open de Trainer-tools. Je taal, thema en gekozen filters worden op dit apparaat onthouden.</p>
+      <p data-en="Install the site on your home screen for quick access; supported devices may also show shortcuts to popular pages.">Zet de site op je startscherm voor snelle toegang; geschikte apparaten tonen dan ook snelkoppelingen naar populaire pagina's.</p>
+      <div class="first-visit-actions">
+        <button type="button" class="wt-chip" data-onboarding-go="pokedex" data-en="Open Pokédex &amp; Items">Open Pokédex &amp; Items</button>
+        <button type="button" class="wt-chip" data-onboarding-go="regions" data-en="Explore regions">Ontdek regio's</button>
+        <button type="button" class="wt-chip" data-onboarding-go="tools" data-en="Open trainer tools">Open Trainer-tools</button>
+        <button type="button" id="first-visit-close" class="wt-chip" data-en="Dismiss">Sluiten</button>
+      </div>
+    </div>
+  </section>
+  <p id="network-status" class="network-status" role="status" aria-live="polite" hidden></p>
+  <header class="hero" id="page-hero" hidden>
+    <h1><span class="ball"></span> <span id="page-title">Pokédex</span></h1>
+    <div id="catalog-switch" class="wt-chips catalog-switch" role="group" aria-label="Pokédex of items" data-en-aria-label="Pokédex or items" hidden>
+      <button class="wt-chip active" type="button" data-catalog-view="pokedex" data-en="Pokédex">Pokédex</button>
+      <button class="wt-chip" type="button" data-catalog-view="items" data-en="Items">Items</button>
+    </div>
+    <div id="dex-controls" class="controls" hidden>
+      <input id="search" type="search" placeholder="Zoek op naam of nummer..." data-en-placeholder="Search by name or number..." autocomplete="off">
+      <select id="type">
+        <option value="" data-en="All types">Alle types</option>
+      </select>
+      <select id="gen">
+        <option value="1" data-en="Generation 1 (Kanto)">Generatie 1 (Kanto)</option>
+        <option value="2" data-en="Generation 2 (Johto)">Generatie 2 (Johto)</option>
+        <option value="3" data-en="Generation 3 (Hoenn)">Generatie 3 (Hoenn)</option>
+        <option value="4" data-en="Generation 4 (Sinnoh)">Generatie 4 (Sinnoh)</option>
+        <option value="5" data-en="Generation 5 (Unova)">Generatie 5 (Unova)</option>
+        <option value="6" data-en="Generation 6 (Kalos)">Generatie 6 (Kalos)</option>
+        <option value="7" data-en="Generation 7 (Alola)">Generatie 7 (Alola)</option>
+        <option value="8" data-en="Generation 8 (Galar)">Generatie 8 (Galar)</option>
+        <option value="9" data-en="Generation 9 (Paldea)">Generatie 9 (Paldea)</option>
+      </select>
+      <select id="dex-bst" aria-label="Minimum base stat total" data-en-aria-label="Minimum base stat total">
+        <option value="0" data-en="Any base stat total">Elke basisstatistiek</option>
+        <option value="300">BST 300+</option>
+        <option value="450">BST 450+</option>
+        <option value="550">BST 550+</option>
+      </select>
+      <select id="dex-evolution" aria-label="Evolutiestadium" data-en-aria-label="Evolution stage">
+        <option value="all" data-en="Any evolution stage">Elk evolutiestadium</option>
+        <option value="base" data-en="Base form">Basisvorm</option>
+        <option value="middle" data-en="Middle evolution">Midden-evolutie</option>
+        <option value="final" data-en="Final evolution">Laatste evolutie</option>
+        <option value="single" data-en="Does not evolve">Evolueert niet</option>
+      </select>
+      <button id="fav-toggle" title="Alleen favorieten" data-en-title="Favorites only"><span data-en="Favorites">Favorieten</span><small id="fav-count"></small></button>
+    </div>
+  </header>
+
+  <main id="view-home"></main>
+
+  <main id="view-dashboard" hidden></main>
+
+  <main id="view-pokedex" hidden>
+    <p id="status" class="status" aria-live="polite"></p>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <main id="view-game" hidden>
+    <section class="game">
+      <div id="game-start" class="game-panel">
+        <div class="mystery">?</div>
+        <h2 data-en="Who's that Pokémon?">Wie is deze Pokémon?</h2>
+        <p data-en="Choose a quiz mode: silhouette or cry. You have 3 lives!">Kies een quizvorm: silhouet of cry. Je hebt 3 levens!</p>
+        <label class="game-mode-control"><span data-en="Quiz mode">Quizvorm</span>
+          <select id="game-mode">
+            <option value="silhouette" data-en="Silhouette">Silhouet</option>
+            <option value="cry" data-en="Pokémon cry">Pokémon-cry</option>
+          </select>
+        </label>
+        <div class="game-select">
+          <span data-en="Choose the generations to play with:">Kies met welke generaties je wilt spelen:</span>
+          <div id="game-gens" class="gen-picks"></div>
+          <div class="gen-actions">
+            <button type="button" id="gens-all" class="wt-chip" data-en="All">Alles</button>
+            <button type="button" id="gens-none" class="wt-chip" data-en="None">Geen</button>
+            <small id="game-sel-count"></small>
+          </div>
+        </div>
+        <p class="highscore"><span data-en="High score:">Highscore:</span> <b id="best-start">0</b></p>
+        <button id="game-play" class="big-btn" data-en="Start game">Start spel</button>
+      </div>
+
+      <div id="game-round" class="game-panel" hidden>
+        <div class="scorebar">
+          <span><span data-en="Score:">Score:</span> <b id="g-score">0</b></span>
+          <span id="g-lives" class="lives"></span>
+          <span><span data-en="Streak:">Reeks:</span> <b id="g-streak">0</b></span>
+        </div>
+        <div class="silhouette-box">
+          <img id="g-img" class="silhouette" alt="Wie is deze Pokémon?">
+        </div>
+        <button id="g-cry-play" class="wt-chip" type="button" data-en="Play cry" hidden>Speel cry</button>
+        <p id="g-msg" class="g-msg">Wie is deze Pokémon?</p>
+        <div id="g-options" class="options"></div>
+        <button id="g-next" class="big-btn" hidden>Volgende</button>
+      </div>
+
+      <div id="game-over" class="game-panel" hidden>
+        <h2>Game over!</h2>
+        <p class="final"><span data-en="Your score:">Je score:</span> <b id="o-score">0</b></p>
+        <p id="o-record" class="highscore"></p>
+        <button id="game-again" class="big-btn" data-en="Play again">Opnieuw spelen</button>
+        <button id="game-menu" class="big-btn secondary" data-en="Choose other generations">Andere generaties kiezen</button>
+      </div>
+    </section>
+  </main>
+
+  <main id="view-tools" hidden>
+    <div id="tools-body" class="tools-body"></div>
+  </main>
+
+  <main id="view-news" hidden>
+    <div id="news-body" class="news-body"></div>
+  </main>
+
+  <main id="view-items" hidden>
+    <div class="items-controls">
+      <input id="item-search" type="search" placeholder="Zoek een item..." data-en-placeholder="Search an item..." autocomplete="off">
+      <select id="item-cat"><option value="" data-en="All categories">Alle categorieën</option></select>
+    </div>
+    <p id="item-status" class="status" aria-live="polite"></p>
+    <div id="item-grid" class="items-grid"></div>
+    <button id="item-more" class="big-btn more-btn" hidden data-en="Load more">Meer laden</button>
+  </main>
+
+  <main id="view-coloring" hidden>
+    <div id="gallery-tabs" class="wt-chips gallery-tabs" role="tablist" aria-label="Galerijcategorieën" data-en-aria-label="Gallery categories">
+      <button id="gallery-tab-coloring" class="wt-chip active" type="button" role="tab" aria-selected="true" aria-controls="cl-gallery" data-gallery-tab="coloring" data-en="Coloring pages">Kleurplaten</button>
+      <button id="gallery-tab-wallpapers" class="wt-chip" type="button" role="tab" aria-selected="false" aria-controls="wallpaper-gallery" data-gallery-tab="wallpapers" data-en="Wallpapers">Wallpapers</button>
+      <button id="gallery-tab-pokemon" class="wt-chip" type="button" role="tab" aria-selected="false" aria-controls="pokemon-art-gallery" data-gallery-tab="pokemon-illustrations" data-en="Pokémon illustrations">Pokémon-illustraties</button>
+    </div>
+    <div id="cl-gallery" role="tabpanel" aria-labelledby="gallery-tab-coloring"></div>
+    <div id="wallpaper-gallery" role="tabpanel" aria-labelledby="gallery-tab-wallpapers" hidden></div>
+    <div id="pokemon-art-gallery" role="tabpanel" aria-labelledby="gallery-tab-pokemon" hidden></div>
+    <div id="cl-editor" hidden></div>
+  </main>
+
+  <main id="view-regions" hidden>
+    <div id="rg-main"></div>
+    <div id="rg-region" hidden></div>
+    <div id="rg-loc" hidden></div>
+  </main>
+
+  <main id="view-elite" hidden>
+    <div id="el-menu">
+      <h2 class="view-title" data-en="Elite Four &amp; Champions">Elite Four &amp; Kampioenen</h2>
+      <p class="wt-lead" data-en="Pick a game to see every Elite Four member and the champion with their Pokémon, levels and tips to beat them.">Kies een game om alle Elite Four-leden en de kampioen te zien met hun Pokémon, levels en tips om ze te verslaan.</p>
+      <div id="el-groups"></div>
+    </div>
+    <div id="el-detail" hidden></div>
+  </main>
+
+  <main id="view-characters" hidden>
+    <h2 class="view-title" data-en="Pokémon game characters">Pokémon-personages</h2>
+    <p class="wt-lead" data-en="Meet the best-known rivals, heroes, professors, villains and champions from the main Pokémon games. Stories include spoilers; Pokémon shown are notable examples, as teams can change by game or player choice.">Ontmoet de bekendste rivalen, helden, professoren, schurken en kampioenen uit de Pokémon-hoofdgames. De verhalen bevatten spoilers; de getoonde Pokémon zijn bekende voorbeelden, want teams verschillen per game of spelerskeuze.</p>
+    <div class="character-controls">
+      <input id="character-search" type="search" placeholder="Zoek een personage, game of Pokémon..." data-en-placeholder="Search a character, game, or Pokémon..." autocomplete="off">
+      <select id="character-gen" aria-label="Filter op generatie" data-en-aria-label="Filter by generation">
+        <option value="all" data-en="All generations">Alle generaties</option>
+        <option value="1" data-en="Generation 1 · Kanto">Generatie 1 · Kanto</option>
+        <option value="2" data-en="Generation 2 · Johto">Generatie 2 · Johto</option>
+        <option value="3" data-en="Generation 3 · Hoenn">Generatie 3 · Hoenn</option>
+        <option value="4" data-en="Generation 4 · Sinnoh">Generatie 4 · Sinnoh</option>
+        <option value="5" data-en="Generation 5 · Unova">Generatie 5 · Unova</option>
+        <option value="6" data-en="Generation 6 · Kalos">Generatie 6 · Kalos</option>
+        <option value="7" data-en="Generation 7 · Alola">Generatie 7 · Alola</option>
+        <option value="8" data-en="Generation 8 · Galar">Generatie 8 · Galar</option>
+        <option value="9" data-en="Generation 9 · Paldea">Generatie 9 · Paldea</option>
+      </select>
+    </div>
+    <p id="character-status" class="status" aria-live="polite"></p>
+    <div id="character-grid" class="character-grid"></div>
+  </main>
+
+  <main id="view-walkthrough" hidden>
+    <div id="wt-menu">
+      <h2 class="view-title">Walkthrough</h2>
+      <p class="wt-lead" data-en="Pick a generation and a Pokémon game to open a complete guide with step-by-step help, Gym and Elite Four teams, secrets, tips and post-game.">Kies een generatie en een Pokémon-game om een complete gids te openen met stap-voor-stap uitleg, Gym- en Elite Four-teams, geheimen, tips en post-game.</p>
+      <div id="wt-groups"></div>
+    </div>
+    <div id="wt-guide" hidden></div>
+  </main>
+
+  <main id="view-articles" hidden>
+    <div id="article-list">
+      <h2 class="view-title">Artikelen over Pokémon</h2>
+      <div id="article-grid" class="article-grid"></div>
+    </div>
+    <article id="article-reader" class="reader" hidden></article>
+  </main>
+
+  <main id="view-emulator" hidden></main>
+
+  <main id="view-websites" hidden>
+    <h2 class="view-title">Handige Pokémon-websites</h2>
+    <input id="site-search" class="site-search" type="search" placeholder="Zoek een website..." autocomplete="off">
+    <div id="site-groups"></div>
+  </main>
+
+  <main id="view-cards" hidden>
+    <div id="tcg-main">
+      <h2 class="view-title" data-en="Pokémon cards &amp; their value">Pokémon kaarten &amp; hun waarde</h2>
+      <div class="live-bar center"><span class="live-dot"></span> <span data-en="LIVE · open a card for the current price. Prices refresh automatically every 60 seconds.">LIVE · open een kaart voor de actuele prijs. Prijzen worden elke 60 seconden automatisch bijgewerkt.</span></div>
+      <section id="tcg-latest-sets" aria-live="polite"></section>
+
+      <form id="tcg-form" class="items-controls">
+        <input id="tcg-q" type="search" placeholder="Zoek op naam, bijv. Pikachu" data-en-placeholder="Search by name, e.g. Pikachu" autocomplete="off">
+        <select id="tcg-set" aria-label="Set"></select>
+        <select id="tcg-price-sort" aria-label="Sorteren op kaartwaarde" data-en-aria-label="Sort by card value">
+          <option value="desc" selected data-en="Value: high to low (default)">Waarde: duur naar goedkoop (standaard)</option>
+          <option value="asc" data-en="Value: low to high">Waarde: goedkoop naar duur</option>
+          <option value="num-asc" data-en="Card number: low to high">Kaartnummer: laag naar hoog</option>
+          <option value="num-desc" data-en="Card number: high to low">Kaartnummer: hoog naar laag</option>
+          <option value="" data-en="Set order (no sorting)">Setvolgorde (niet sorteren)</option>
+        </select>
+        <input id="tcg-price-min" type="number" min="0" step="0.01" placeholder="Min. €" data-en-placeholder="Min. €" aria-label="Minimumwaarde in euro" data-en-aria-label="Minimum value in euros">
+        <input id="tcg-price-max" type="number" min="0" step="0.01" placeholder="Max. €" data-en-placeholder="Max. €" aria-label="Maximumwaarde in euro" data-en-aria-label="Maximum value in euros">
+        <button class="big-btn" type="submit" style="margin:0" data-en="Search">Zoeken</button>
+      </form>
+      <p class="tcg-note tcg-price-note" data-en="Value filters use the Cardmarket trend price in euros. Cards without a known price are excluded when using a price range. Price lookups may take a moment.">Prijsfilters gebruiken de Cardmarket-trendprijs in euro's. Kaarten zonder bekende prijs worden niet getoond als je een prijsbereik invult. Het ophalen van prijzen kan even duren.</p>
+      <p id="tcg-status" class="status"></p>
+      <div id="tcg-results" class="tcg-results"></div>
+      <button id="tcg-more" class="big-btn more-btn" hidden data-en="Load more">Meer laden</button>
+    </div>
+
+    <div id="tcg-detail" hidden>
+      <button id="tcg-back" class="back-btn" style="max-width:none" data-en="← Back to cards">← Terug naar kaarten</button>
+      <div id="tcg-detail-body" class="tcg-detail"></div>
+    </div>
+  </main>
+
+  <main id="view-album" hidden>
+    <h2 class="view-title" data-en="My card album">Mijn kaartalbum</h2>
+    <p class="wt-lead" data-en="Keep track of the cards you own and see what your collection is worth. Your album is stored in this browser. Add cards with the + button in Card values.">Hou bij welke kaarten je hebt en zie wat je collectie waard is. Je album wordt in deze browser bewaard. Voeg kaarten toe met de + knop bij Kaartwaarde.</p>
+    <div id="al-stats" class="tcg-boxes al-stats"></div>
+    <div id="al-history" class="al-history"></div>
+    <div id="al-movers" class="al-movers"></div>
+    <div id="al-progress" class="al-progress"></div>
+    <div class="items-controls">
+      <input id="al-q" type="search" placeholder="Zoek in je album..." data-en-placeholder="Search your album..." autocomplete="off">
+      <select id="al-sort">
+        <option value="value" data-en="Sort: highest value">Sorteer: hoogste waarde</option>
+        <option value="name" data-en="Sort: name">Sorteer: naam</option>
+        <option value="recent" data-en="Sort: recently added">Sorteer: recent toegevoegd</option>
+      </select>
+      <button id="al-refresh" class="big-btn" style="margin:0" data-en="Update prices">Prijzen bijwerken</button>
+      <button id="al-clear" class="big-btn secondary" style="margin:0" data-en="Clear album">Album wissen</button>
+    </div>
+    <p id="al-status" class="status"></p>
+    <div id="al-grid" class="al-grid"></div>
+  </main>
+
+  <main id="view-tcg" hidden></main>
+
+  <div class="ad-slot" data-slot="footer" hidden>
+    <small>Advertentie</small>
+    <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+
+  <footer>
+    <p data-en="Data from &lt;a href=&quot;https://pokeapi.co&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;PokéAPI&lt;/a&gt; and &lt;a href=&quot;https://tcgdex.dev&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;TCGdex&lt;/a&gt;. Pokémon is owned by Nintendo / Game Freak. Unofficial fan site.">Data van <a href="https://pokeapi.co" target="_blank" rel="noopener">PokéAPI</a> en <a href="https://tcgdex.dev" target="_blank" rel="noopener">TCGdex</a>. Pokémon is eigendom van Nintendo / Game Freak. Onofficiële fansite.</p>
+    <nav><a href="over-ons.html">Over ons</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a> · <a href="disclaimer.html">Disclaimer</a> · <a href="#" data-cookie-settings>Cookie-instellingen</a></nav>
+  </footer>
+  </div>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button id="close" class="close" aria-label="Sluiten" data-en-aria-label="Close">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="print-area"></div>
+
+  <script defer src="i18n.js"></script>
+  <script defer src="live.js"></script>
+  <script defer src="nav.js"></script>
+  <script defer src="app.js"></script>
+  <script defer src="game.js"></script>
+  <script defer src="items.js"></script>
+  <script defer src="articles-more.js"></script>
+  <script defer src="articles.js"></script>
+  <script defer src="websites.js"></script>
+  <script defer src="walkthrough-data.js"></script>
+  <script defer src="walkthrough-extra.js"></script>
+  <script defer src="battle-data.js"></script>
+  <script defer src="elite.js"></script>
+  <script defer src="characters.js"></script>
+  <script defer src="secrets-guide.js"></script>
+  <script defer src="team.js"></script>
+  <script defer src="walkthrough.js"></script>
+  <script defer src="coloring.js"></script>
+  <script defer src="wallpapers.js"></script>
+  <script defer src="pokemon-illustrations.js"></script>
+  <script defer src="regions.js"></script>
+  <script defer src="album.js"></script>
+  <script defer src="cards.js"></script>
+  <script defer src="tcg-deck.js"></script>
+  <script defer src="tools.js"></script>
+  <script defer src="news.js"></script>
+  <script defer src="emulator.js"></script>
+  <script defer src="home.js"></script>
+  <script defer src="dashboard.js"></script>
+  <script defer src="site.js"></script>
+  <script defer src="adsense.js"></script>
+</body>
+</html>
